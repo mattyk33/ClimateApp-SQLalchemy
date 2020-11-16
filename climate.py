@@ -63,5 +63,22 @@ def precipitation():
 
     return jsonify(precip_dict)
 
+@app.route("/api/v1.0/stations")
+def stations():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    # Create dictionary
+    stations_dictionary = {}
+
+    # Query all stations
+    stat = session.query(Station.station, Station.name).all()
+    for station, name in stat:
+        stations_dictionary[station] = name
+
+    session.close()
+ 
+    return jsonify(stations_dictionary)
+
 if __name__ == '__main__':
     app.run(debug=True)
