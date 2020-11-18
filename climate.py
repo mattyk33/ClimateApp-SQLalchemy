@@ -43,7 +43,7 @@ def welcome():
 
 @app.route("/api/v1.0/precipitation")
 def precipitation():
-    # Create our session (link) from Python to the DB
+    # Create our session from Python to the DB
     session = Session(engine)
 
     # Calculate the date 1 year ago from the last data point in the database
@@ -65,7 +65,7 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
-    # Create our session (link) from Python to the DB
+    # Create our session from Python to the DB
     session = Session(engine)
 
     # Create dictionary
@@ -82,7 +82,7 @@ def stations():
 
 @app.route("/api/v1.0/tobs")
 def tobs():
-    # Create our session (link) from Python to the DB
+    # Create our session from Python to the DB
     session = Session(engine)
 
     # Get the last date contained in the dataset and date from one year ago
@@ -105,7 +105,34 @@ def tobs():
 
     return jsonify(tobs_list)
 
+@app.route("/api/v1.0/<start>")
+def temp_start(start):
 
+    # Create our session from Python to the DB
+    session = Session(engine)
+
+    # Convert to list of dictionaries to jsonify
+    temp_start_list = []
+
+    # Query for ave, min, max
+    temp_stats =   session.query(  Measurement.date,\
+                                func.min(Measurement.tobs), \
+                                func.avg(Measurement.tobs), \
+                                func.max(Measurement.tobs)).\
+                        filter(Measurement.date >= start).\
+                        group_by(Measurement.date).all()
+
+    for date, min, avg, max in temp_stats:
+        temp_start_dict = {}
+        temp_start_dict["Date"] = date
+        temp_start_dict["TMIN"] = min
+        temp_start_dict["TAVG"] = avg
+        temp_start_dict["TMAX"] = max
+        temp_start_list.append(temp_start_dict)
+
+    session.close()    
+
+    return jsonify(temp_start_list)
     
 
 if __name__ == '__main__':
