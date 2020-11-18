@@ -80,5 +80,33 @@ def stations():
  
     return jsonify(stations_dictionary)
 
+@app.route("/api/v1.0/tobs")
+def tobs():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    # Get the last date contained in the dataset and date from one year ago
+    one_year_ago = dt.date(2017,8,23)-dt.timedelta(days=365)
+
+    # Query for the dates and temperature values
+    date_temps = session.query(Measurement.date, Measurement.tobs).\
+                filter(Measurement.date >= one_year_ago).\
+                order_by(Measurement.date).all()
+    
+    # Convert to list of dictionaries to jsonify
+    tobs_list = []
+
+    for date, tobs in date_temps:
+        tobs_dict = {}
+        tobs_dict[date] = tobs
+        tobs_list.append(tobs_dict)
+
+    session.close()
+
+    return jsonify(tobs_list)
+
+
+    
+
 if __name__ == '__main__':
     app.run(debug=True)
