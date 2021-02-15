@@ -1,14 +1,9 @@
-# sqlalchemy-challenge
-
 # Surfs Up
 
 Congratulations! You've decided to treat yourself to a long holiday vacation in Honolulu, Hawaii! To help with your trip planning, you need to do some climate analysis on the area. The following outlines what you need to do.
 
 # Step 1 - Climate Analysis and Exploration
 To begin, use Python and SQLAlchemy to do basic climate analysis and data exploration of your climate database. All of the following analysis should be completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
-
-
-Use the provided starter notebook and hawaii.sqlite files to complete your climate analysis and data exploration.
 
 
 Choose a start date and end date for your trip. Make sure that your vacation range is approximately 3-15 days total.
@@ -126,9 +121,6 @@ When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater 
 
 When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive.
 
-# Bonus: Other Recommended Analyses
-
-The following are optional challenge queries. These are highly recommended to attempt, but not required for the homework.
 
 
 # Temperature Analysis I
@@ -149,8 +141,6 @@ Use the t-test to determine whether the difference in the means, if any, is stat
 
 # Temperature Analysis II
 
-
-The starter notebook contains a function called calc_temps that will accept a start date and end date in the format %Y-%m-%d. The function will return the minimum, average, and maximum temperatures for that range of dates.
 
 
 Use the calc_temps function to calculate the min, avg, and max temperatures for your trip using the matching dates from the previous year (i.e., use "2017-01-01" if your trip start date was "2018-01-01").
